@@ -1,8 +1,7 @@
 ﻿<Properties StartupConfiguration="{CA0BCD64-905A-42CC-96CD-EE81A492FB9D}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="SteticTutorial/MainWindow.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="MainWindow.cs">
     <Files>
-      <File FileName="SteticTutorial/Program.cs" Line="17" Column="1" />
-      <File FileName="SteticTutorial/MainWindow.cs" Line="19" Column="22" />
+      <File FileName="MainWindow.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />

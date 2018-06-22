@@ -1,0 +1,6 @@
+/home/miguel/Dropbox/dev/SteticTutorial/SteticTutorial/SteticTutorial/bin/Debug/SteticTutorial.exe
+/home/miguel/Dropbox/dev/SteticTutorial/SteticTutorial/SteticTutorial/bin/Debug/SteticTutorial.pdb
+/home/miguel/Dropbox/dev/SteticTutorial/SteticTutorial/SteticTutorial/obj/x86/Debug/SteticTutorial.csprojResolveAssemblyReference.cache
+/home/miguel/Dropbox/dev/SteticTutorial/SteticTutorial/SteticTutorial/obj/x86/Debug/SteticTutorial.csproj.CoreCompileInputs.cache
+/home/miguel/Dropbox/dev/SteticTutorial/SteticTutorial/SteticTutorial/obj/x86/Debug/SteticTutorial.exe
+/home/miguel/Dropbox/dev/SteticTutorial/SteticTutorial/SteticTutorial/obj/x86/Debug/SteticTutorial.pdb
