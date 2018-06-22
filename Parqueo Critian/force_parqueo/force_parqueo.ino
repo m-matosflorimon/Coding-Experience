@@ -1,3 +1,7 @@
+#include <DS3231.h>
+
+
+
 #include <Servo.h>
 
 
@@ -6,6 +10,7 @@
 #include <Keypad.h>
 
 #define boton 12
+#define tarifa 25
 
 // motor
 int Pin1 = 10;
@@ -53,6 +58,7 @@ LiquidCrystal_I2C lcd(0x27, 2, 1, 0, 4, 5, 6, 7, 3, POSITIVE);
 
 Servo myservo;
 
+
 const byte ROWS = 4;
 const byte COLS = 4;
 char keys[ROWS][COLS] = {
@@ -65,6 +71,8 @@ byte rowPins[ROWS] = {9,8,7,6}; //Filas(pines del 9 al 6)
 byte colPins[COLS] = {5,4,3,2}; //Columnas (pines del 5 al)
 Keypad keypad = Keypad( makeKeymap(keys), rowPins, colPins, ROWS, COLS );
 
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 bool ultrasonic(){
   
@@ -115,7 +123,7 @@ int dataBase(int request , int code){
         }
         else if (request == 3 && data[i][0] == 0){
 
-              data[i][0] = getTime();
+              data[i][0] = getTimes();
               data[i][1] = code;
               return 1;    
         }
@@ -124,14 +132,15 @@ int dataBase(int request , int code){
 }
 
 int codigo() {
-  while (randomInt == previousRandomInt)
-    //Create a random number and assign it to the randomInt variable.
-    randomInt = random(0, 10); //When a consecutive random number has been identified, indicate it.
-  Serial.println();
-  //close while statement
-  previousRandomInt = randomInt;
-  Serial.print(randomInt);
-
+  while (true){
+    randomInt = random(100000, 999999);
+    for (int i; i<=2;i++){
+        if(data[i][1] == randomInt){
+          continue;
+        }
+    }
+    break;
+  }
   return randomInt;
 }
 
@@ -152,14 +161,16 @@ void door(bool control){
 }
 
 int monto(int hora){
+  
+  return (getTimes() - hora)*tarifa;
+}
+
+int getTimes(){
+  
   return 0;
 }
 
-int getTime(){
-  return 0;
-}
-
-char menu(){
+void menu(){
 
 menu:
 
@@ -271,25 +282,24 @@ menu:
 
   goto menu;
   
-  return key;    
+      
 }
 
 
-
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
   pinMode(boton,INPUT);
   myservo.attach(9);
+
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-  
-  char keyy = menu();
-  Serial.println(keyy);
-  Serial.println("Paso pa aca");
+  // put your main code here, to run repeatedly:  
+  menu();
+
 }
 
 
