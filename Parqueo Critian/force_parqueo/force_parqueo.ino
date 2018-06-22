@@ -1,7 +1,11 @@
+#include <Servo.h>
+
 
 #include <Wire.h> 
 #include <LiquidCrystal_I2C.h>
 #include <Keypad.h>
+
+#define boton 12
 
 // motor
 int Pin1 = 10;
@@ -41,8 +45,13 @@ int data[3][2]{
   {0,0}
 };
 
+//Servo
+int pos = 0;
+
 //teclado
 LiquidCrystal_I2C lcd(0x27, 2, 1, 0, 4, 5, 6, 7, 3, POSITIVE);
+
+Servo myservo;
 
 const byte ROWS = 4;
 const byte COLS = 4;
@@ -82,6 +91,7 @@ if (distanceCm<=referencia){
  *    1 retorna la hora de entrada del codigo
  *    2 retorna el numero de parqueo donde esta el codigo
  *    3 agrega un nuevo codigo; retorna 1 (tentativo)
+ *    4 habilita el parqueo donde esta el codigo
  *    Retorna 0 en caso de no encontrar el codigo introducido o si esta lleno el parqueo
  */
 int dataBase(int request , int code){
@@ -96,7 +106,12 @@ int dataBase(int request , int code){
 
               case 2:
                   return i + 1;
-           }
+
+              case 4:
+                  data[i][0] = 0;
+                  data[i][1] = 0;
+                  break;
+           }  
         }
         else if (request == 3 && data[i][0] == 0){
 
@@ -120,8 +135,20 @@ int codigo() {
   return randomInt;
 }
 
+//Si le pasamos true abre la puerta, false la cierra
 void door(bool control){
-  
+  if(control){
+    for(pos = 0; pos <= 90; pos +=1){
+      myservo.write(pos);
+      delay(2000);
+    }
+  }
+   else{
+    for(pos = 90; pos >= 0; pos -=1){
+      myservo.write(pos);
+      delay(2000);
+   }
+  }
 }
 
 int monto(int hora){
@@ -211,7 +238,27 @@ menu:
             }
 
             lcd.print("Su monto a pagar es RD$" + monto(dataBase(1,_code.toInt())));
-            
+
+            while(boton == LOW){
+              
+            }
+
+            lcd.clear();
+            lcd.print("Gracias por su visita");
+
+            door(true);
+
+            while(ultrasonic() == false){
+              
+            }
+
+            while(ultrasonic() == true){
+              
+            }
+
+            door(false);
+            dataBase(4,_code.toInt());
+            break;
         }
     
 
@@ -233,6 +280,8 @@ menu:
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
+  pinMode(boton,INPUT);
+  myservo.attach(9);
 }
 
 void loop() {
